@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WALLVERSE</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #090b12;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 22px 18px;
+  background: #111521;
+  border-bottom: 1px solid #252a3b;
+}
+h1 { margin: 0; color: #8c7bff; }
+header p { color: #a9aec2; }
+main { padding: 18px; max-width: 1100px; margin: auto; }
+input {
+  width: 100%; padding: 14px;
+  border: 1px solid #343950;
+  border-radius: 12px;
+  background: #171b29; color: white;
+}
+.categories {
+  display: flex; gap: 9px; flex-wrap: wrap;
+  margin: 18px 0;
+}
+button {
+  background: #1b2030; color: white;
+  border: 1px solid #363c54;
+  border-radius: 20px; padding: 10px 14px;
+  cursor: pointer;
+}
+button.active { background: #7565f5; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 13px;
+}
+.wall {
+  overflow: hidden; background: #151927;
+  border-radius: 14px; border: 1px solid #282e40;
+}
+.wall img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+.wall div { padding: 10px; }
+.wall p { margin: 0 0 10px; font-weight: bold; }
+.wall a {
+  display: inline-block; background: #7565f5;
+  padding: 9px 12px; border-radius: 9px;
+  color: white; text-decoration: none; font-size: 13px;
+}
+@media(min-width:650px) {
+  .grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>✦ WALLVERSE</h1>
+  <p>Your screen. Your style. Your universe.</p>
+</header>
+<main>
+  <input id="search" placeholder="Search cars, tech, planes..."
+  oninput="render()">
+  <div class="categories" id="categories"></div>
+  <h2 id="heading">Explore wallpapers</h2>
+  <div class="grid" id="grid"></div>
+</main>
+<script>
+const photos = [
+  ["Tech","Futuristic Tech","photo-1518770660439-4636190af475"],
+  ["Tech","Gaming Setup","photo-1593305841991-05c297ba4575"],
+  ["Cars","Supercar","photo-1503376780353-7e6692767b70"],
+  ["Cars","Sports Car","photo-1492144534655-ae79c964c9d7"],
+  ["Planes","Aircraft","photo-1436491865332-7a61a109cc05"],
+  ["Planes","Jet in the Sky","photo-1474302770737-173ee21bab63"],
+  ["Bikes","Motorcycle","photo-1558981806-ec527fa84c39"],
+  ["Bikes","Racing Bike","photo-1558981403-c5f9899a28bc"],
+  ["Aesthetic","Dreamy Landscape","photo-1470770841072-f978cf4d019e"],
+  ["Aesthetic","Mountain Escape","photo-1464822759023-fed622ff2c3b"],
+  ["Tech","Neon City","photo-1519608487953-e999c86e7455"],
+  ["Cars","Classic Car","photo-1503736334956-4c8f8e92946d"]
+];
+let category = "All";
+const cats = ["All","Tech","Cars","Planes","Bikes","Aesthetic"];
+const categories = document.getElementById("categories");
+cats.forEach(c => {
+  const b = document.createElement("button");
+  b.textContent = c;
+  b.className = c === category ? "active" : "";
+  b.onclick = () => {
+    category = c;
+    [...categories.children].forEach(x =>
+      x.classList.toggle("active", x.textContent === c));
+    render();
+  };
+  categories.appendChild(b);
+});
+function render() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const results = photos.filter(p =>
+    (category === "All" || p[0] === category) &&
+    p[1].toLowerCase().includes(q));
+  document.getElementById("heading").textContent =
+    category === "All" ? "Explore wallpapers" : category + " Wallpapers";
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  results.forEach(p => {
+    const url = "https://images.unsplash.com/" + p[2] +
+      "?auto=format&fit=crop&w=700&q=85";
+    const card = document.createElement("article");
+    card.className = "wall";
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = p[1];
+    img.loading = "lazy";
+    const info = document.createElement("div");
+    const title = document.createElement("p");
+    title.textContent = p[1];
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "wallverse-wallpaper.jpg";
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "View / Download ↗";
+    info.append(title, link);
+    card.append(img, info);
+    grid.appendChild(card);
+  });
+  if (!results.length) grid.textContent = "No wallpapers found.";
+}
+render();
+</script>
+</body>
+</html>
