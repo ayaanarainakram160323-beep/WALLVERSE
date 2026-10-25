@@ -1,397 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090f">
-  <title>WALLYZA — Wallpaper Universe</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090912">
+<title>WALLYZA — Wallpaper Universe</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #09090f;
-      color: white;
-    }
-
-    header {
-      text-align: center;
-      padding: 35px 15px 25px;
-      background: linear-gradient(135deg, #17132d, #10101a);
-    }
-
-    header h1 {
-      font-size: clamp(38px, 7vw, 65px);
-      margin: 0;
-      letter-spacing: 4px;
-      color: #a78bfa;
-    }
-
-    header p {
-      color: #c7c7d5;
-    }
-
-    .search-box {
-      display: block;
-      width: min(90%, 550px);
-      margin: 20px auto;
-      padding: 15px;
-      border-radius: 12px;
-      border: 1px solid #39394c;
-      background: #171722;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .search-box:focus {
-      border-color: #a78bfa;
-    }
-
-    #categories {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 0 15px 25px;
-    }
-
-    button {
-      padding: 10px 16px;
-      border: 1px solid #39394c;
-      border-radius: 20px;
-      background: #171722;
-      color: white;
-      cursor: pointer;
-    }
-
-    button:hover,
-    button.active {
-      background: #8b5cf6;
-      border-color: #8b5cf6;
-    }
-
-    main {
-      padding: 10px 20px 40px;
-      max-width: 1500px;
-      margin: auto;
-    }
-
-    #heading {
-      margin-bottom: 20px;
-    }
-
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(210px, 1fr)
-      );
-      gap: 20px;
-    }
-
-    .wall {
-      background: #171722;
-      border: 1px solid #29293b;
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform 0.2s;
-    }
-
-    .wall:hover {
-      transform: translateY(-4px);
-    }
-
-    .wall img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      background: #252536;
-    }
-
-    .wall-info {
-      padding: 14px;
-    }
-
-    .wall-info h3 {
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-
-    .wall-info small {
-      color: #aaaac0;
-    }
-
-    .wall-info a {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 10px 13px;
-      border-radius: 8px;
-      background: #8b5cf6;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .wall-info a:hover {
-      background: #7041dc;
-    }
-
-    #message {
-      color: #c7c7d5;
-      text-align: center;
-      padding: 30px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #85859a;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090912;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:35px 16px;background:linear-gradient(135deg,#25134b,#10101c)}
+h1{margin:0;color:#b99aff;font-size:clamp(42px,8vw,68px);letter-spacing:5px}
+header p{color:#ddd}
+#search{display:block;width:min(92%,650px);margin:22px auto;padding:15px;background:#191925;color:white;border:1px solid #51456f;border-radius:12px;font-size:16px}
+#categories{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;padding:0 12px 25px}
+button{cursor:pointer;border:1px solid #454055;background:#191925;color:white;border-radius:22px;padding:10px 14px}
+button.active,button:hover{background:#8757f5;border-color:#8757f5}
+main{max-width:1500px;margin:auto;padding:12px 18px 40px}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.card{overflow:hidden;background:#191925;border:1px solid #302b43;border-radius:13px}
+.card img{display:block;width:100%;height:280px;object-fit:cover;background:#292638}
+.info{padding:13px}
+.info h3{margin:0 0 8px;font-size:17px}
+.tag{font-size:13px;color:#bca5ff}
+.info a{display:inline-block;margin-top:13px;background:#8757f5;color:white;text-decoration:none;padding:10px 13px;border-radius:8px;font-size:14px}
+#message{text-align:center;padding:25px;color:#ccc}
+footer{text-align:center;color:#999;padding:25px}
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>WALLYZA</h1>
-    <p>Your world. Your wallpaper. Your vibe. ✨</p>
-  </header>
 
-  <input
-    id="search"
-    class="search-box"
-    type="search"
-    placeholder="🔍 Search cars, bikes, gaming, nature..."
-    aria-label="Search wallpapers"
-  >
+<header>
+<h1>WALLYZA</h1>
+<p>Your world. Your wallpaper. Your vibe. ✨</p>
+</header>
 
-  <nav id="categories" aria-label="Wallpaper categories"></nav>
+<input id="search" type="search"
+placeholder="Search BMW, Lamborghini, Yamaha, planes, nature..."
+aria-label="Search wallpapers">
 
-  <main>
-    <h2 id="heading">Explore Wallpapers</h2>
-    <section id="grid"></section>
-    <p id="message" hidden>No wallpapers found. Try another search!</p>
-  </main>
+<nav id="categories"></nav>
 
-  <footer>
-    WALLYZA © 2026 · Find your next wallpaper.
-  </footer>
+<main>
+<h2 id="heading">Explore All Wallpapers</h2>
+<div id="grid"></div>
+<p id="message" hidden></p>
+</main>
 
-  <script>
-    const photos = [
-      {
-        category: "Tech",
-        name: "Futuristic Technology",
-        id: "photo-1518770660439-4636190af475"
-      },
-      {
-        category: "Gaming",
-        name: "Gaming Setup",
-        id: "photo-1593305841991-05c297ba4575"
-      },
-      {
-        category: "Cars",
-        name: "Luxury Sports Car",
-        id: "photo-1503376780353-7e6692767b70"
-      },
-      {
-        category: "Cars",
-        name: "Sports Car",
-        id: "photo-1492144534655-ae79c964c9d7"
-      },
-      {
-        category: "Cars",
-        name: "Classic Car",
-        id: "photo-1503736334956-4c8f8e92946d"
-      },
-      {
-        category: "Planes",
-        name: "Aircraft",
-        id: "photo-1436491865332-7a61a109cc05"
-      },
-      {
-        category: "Planes",
-        name: "Jet in the Sky",
-        id: "photo-1474302770737-173ee21bab63"
-      },
-      {
-        category: "Bikes",
-        name: "Motorcycle",
-        id: "photo-1558981806-ec527fa84c39"
-      },
-      {
-        category: "Bikes",
-        name: "Racing Bike",
-        id: "photo-1558981403-c5f9899a28bc"
-      },
-      {
-        category: "Nature",
-        name: "Dreamy Landscape",
-        id: "photo-1470770841072-f978cf4d019e"
-      },
-      {
-        category: "Nature",
-        name: "Mountain Escape",
-        id: "photo-1464822759023-fed622ff2c3b"
-      },
-      {
-        category: "Space",
-        name: "Galaxy",
-        id: "photo-1462331940025-496dfbfc7564"
-      },
-      {
-        category: "Aesthetic",
-        name: "Neon Night",
-        id: "photo-1519608487953-e999c86e7455"
-      },
-      {
-        category: "Animals",
-        name: "Wildlife",
-        id: "photo-1472396961693-142e6e269027"
-      },
-      {
-        category: "Architecture",
-        name: "Modern Architecture",
-        id: "photo-1487958449943-2429e8be8625"
-      },
-      {
-        category: "Nature",
-        name: "Ocean Views",
-        id: "photo-1507525428034-b723cf961d3e"
-      },
-      {
-        category: "Tech",
-        name: "Computer Technology",
-        id: "photo-1519389950473-47ba0277781c"
-      },
-      {
-        category: "Aesthetic",
-        name: "Minimalist Mood",
-        id: "photo-1494438639946-1ebd1d20bf85"
-      },
-      {
-        category: "Gaming",
-        name: "Gaming Gear",
-        id: "photo-1542751371-adc38448a05e"
-      },
-      {
-        category: "Nature",
-        name: "Forest Adventure",
-        id: "photo-1448375240586-882707db888b"
-      }
-    ];
+<footer>WALLYZA © 2026 · Wallpaper Universe</footer>
 
-    let selectedCategory = "All";
+<script>
+const photos = [
+  // CARS
+  ["Cars","Porsche Sports Car","photo-1503376780353-7e6692767b70"],
+  ["Cars","BMW","photo-1555215695-3004980ad54e"],
+  ["Cars","Mercedes-Benz","photo-1618843479313-40f8afb4b4d8"],
+  ["Cars","Toyota","photo-1621007947382-bb3c3994e3fb"],
+  ["Cars","Honda","photo-1594070319944-7c0cbebb6f58"],
+  ["Cars","Lamborghini Style Supercar","photo-1511919884226-fd3cad34687c"],
+  ["Cars","Ferrari Style Supercar","photo-1492144534655-ae79c964c9d7"],
+  ["Cars","Classic Car","photo-1503736334956-4c8f8e92946d"],
+  ["Cars","Luxury Car","photo-1549317661-bd32c8ce0db2"],
 
-    const categories = [
-      "All",
-      "Cars",
-      "Bikes",
-      "Tech",
-      "Gaming",
-      "Nature",
-      "Space",
-      "Planes",
-      "Animals",
-      "Aesthetic",
-      "Architecture"
-    ];
+  // BIKES
+  ["Bikes","Sport Motorcycle","photo-1558981806-ec527fa84c39"],
+  ["Bikes","Racing Motorcycle","photo-1558981403-c5f9899a28bc"],
+  ["Bikes","Adventure Motorcycle","photo-1568772585407-9361f9bf3a87"],
+  ["Bikes","Motorcycle Road Trip","photo-1558981806-ec527fa84c39"],
+  ["Bikes","Motorcycle Detail","photo-1558981403-c5f9899a28bc"],
 
-    const categoryBox = document.getElementById("categories");
-    const search = document.getElementById("search");
-    const grid = document.getElementById("grid");
-    const heading = document.getElementById("heading");
-    const message = document.getElementById("message");
+  // PLANES
+  ["Planes","Passenger Airplane","photo-1436491865332-7a61a109cc05"],
+  ["Planes","Jet in the Sky","photo-1474302770737-173ee21bab63"],
+  ["Planes","Aircraft in Flight","photo-1436491865332-7a61a109cc05"],
 
-    categories.forEach(function(category) {
-      const button = document.createElement("button");
-      button.textContent = category;
-      button.className =
-        category === selectedCategory ? "active" : "";
+  // TECH
+  ["Tech","Futuristic Technology","photo-1518770660439-4636190af475"],
+  ["Tech","Computer Setup","photo-1519389950473-47ba0277781c"],
+  ["Tech","Laptop Workspace","photo-1498050108023-c5249f4df085"],
+  ["Tech","Digital Devices","photo-1512499617640-c74ae3a79d37"],
 
-      button.addEventListener("click", function() {
-        selectedCategory = category;
+  // GAMING
+  ["Gaming","Gaming Setup","photo-1593305841991-05c297ba4575"],
+  ["Gaming","Gaming Arena","photo-1542751371-adc38448a05e"],
+  ["Gaming","Gaming Desk","photo-1593640408182-31c70c8268f5"],
 
-        document.querySelectorAll("#categories button")
-          .forEach(function(item) {
-            item.classList.toggle(
-              "active",
-              item.textContent === category
-            );
-          });
+  // NATURE
+  ["Nature","Green Forest","photo-1448375240586-882707db888b"],
+  ["Nature","Mountain Escape","photo-1464822759023-fed622ff2c3b"],
+  ["Nature","Blue Ocean","photo-1507525428034-b723cf961d3e"],
+  ["Nature","Dreamy Landscape","photo-1470770841072-f978cf4d019e"],
+  ["Nature","Waterfall","photo-1432405972618-c60b0225b8f9"],
 
-        render();
-      });
+  // AESTHETICS
+  ["Aesthetic","Neon Night","photo-1519608487953-e999c86e7455"],
+  ["Aesthetic","Minimalist Mood","photo-1494438639946-1ebd1d20bf85"],
+  ["Aesthetic","Pink Sky","photo-1490750967868-88aa4486c946"],
+  ["Aesthetic","Dreamy Clouds","photo-1534088568595-a066f410bcda"],
 
-      categoryBox.appendChild(button);
+  // SPACE
+  ["Space","Galaxy","photo-1462331940025-496dfbfc7564"],
+  ["Space","Night Sky","photo-1446776811953-b23d57bd21aa"],
+  ["Space","Stars and Space","photo-1464802686167-b939a6910659"],
+
+  // ANIMALS
+  ["Animals","Wildlife","photo-1472396961693-142e6e269027"],
+  ["Animals","Beautiful Birds","photo-1444464666168-49d633b86797"],
+  ["Animals","Wild Animal","photo-1549366021-9f761d450615"],
+
+  // ARCHITECTURE
+  ["Architecture","Modern Building","photo-1487958449943-2429e8be8625"],
+  ["Architecture","City Buildings","photo-1486406146926-c627a92ad1ab"],
+  ["Architecture","Beautiful Architecture","photo-1511818966892-d7d671e672a2"]
+];
+
+const categoryNames = [
+  "All Wallpapers",
+  "Cars",
+  "Bikes",
+  "Planes",
+  "Tech",
+  "Gaming",
+  "Nature",
+  "Aesthetic",
+  "Space",
+  "Animals",
+  "Architecture"
+];
+
+let selected = "All Wallpapers";
+
+const nav = document.getElementById("categories");
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const heading = document.getElementById("heading");
+const message = document.getElementById("message");
+
+categoryNames.forEach(name => {
+  const button = document.createElement("button");
+  button.textContent = name;
+  button.className = name === selected ? "active" : "";
+
+  button.addEventListener("click", () => {
+    selected = name;
+    nav.querySelectorAll("button").forEach(b => {
+      b.classList.toggle("active", b.textContent === name);
     });
-
-    function render() {
-      const query = search.value.trim().toLowerCase();
-
-      const results = photos.filter(function(photo) {
-        const matchesCategory =
-          selectedCategory === "All" ||
-          photo.category === selectedCategory;
-
-        const matchesSearch =
-          (photo.name + " " + photo.category)
-            .toLowerCase()
-            .includes(query);
-
-        return matchesCategory && matchesSearch;
-      });
-
-      heading.textContent =
-        selectedCategory === "All"
-          ? "Explore Wallpapers"
-          : selectedCategory + " Wallpapers";
-
-      grid.innerHTML = "";
-      message.hidden = results.length !== 0;
-
-      results.forEach(function(photo) {
-        const url =
-          "https://images.unsplash.com/" + photo.id +
-          "?auto=format&fit=crop&w=900&q=85";
-
-        const card = document.createElement("article");
-        card.className = "wall";
-
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = photo.name;
-        img.loading = "lazy";
-
-        const info = document.createElement("div");
-        info.className = "wall-info";
-
-        const name = document.createElement("h3");
-        name.textContent = photo.name;
-
-        const category = document.createElement("small");
-        category.textContent = photo.category;
-
-        const link = document.createElement("a");
-        link.href = url;
-        link.target = "_blank";
-        link.rel = "noopener";
-        link.textContent = "View / Download";
-
-        info.append(name, category, document.createElement("br"), link);
-        card.append(img, info);
-        grid.appendChild(card);
-      });
-    }
-
-    search.addEventListener("input", render);
-
     render();
-  </script>
+  });
+
+  nav.appendChild(button);
+});
+
+function render() {
+  const query = search.value.trim().toLowerCase();
+
+  const results = photos.filter(photo => {
+    const categoryMatches =
+      selected === "All Wallpapers" || photo[0] === selected;
+
+    const searchMatches =
+      (photo[0] + " " + photo[1]).toLowerCase().includes(query);
+
+    return categoryMatches && searchMatches;
+  });
+
+  heading.textContent = selected === "All Wallpapers"
+    ? "Explore All Wallpapers"
+    : selected + " Wallpapers";
+
+  grid.replaceChildren();
+  message.hidden = results.length !== 0;
+  message.textContent = "No wallpapers found. Try a different search.";
+
+  results.forEach(photo => {
+    const url =
+      "https://images.unsplash.com/" + photo[2] +
+      "?auto=format&fit=crop&w=900&q=85";
+
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = photo[1];
+    img.loading = "lazy";
+
+    img.onerror = () => {
+      img.alt = "Image unavailable";
+      img.style.objectFit = "contain";
+      img.style.padding = "25px";
+      img.src = "data:image/svg+xml," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="350"><rect width="100%" height="100%" fill="#292638"/><text x="50%" y="48%" fill="white" font-size="18" text-anchor="middle">Image unavailable</text><text x="50%" y="57%" fill="#bca5ff" font-size="13" text-anchor="middle">Check your connection</text></svg>'
+      );
+    };
+
+    const info = document.createElement("div");
+    info.className = "info";
+
+    const title = document.createElement("h3");
+    title.textContent = photo[1];
+
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = photo[0];
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "View / Download";
+
+    info.append(title, tag, link);
+    card.append(img, info);
+    grid.appendChild(card);
+  });
+}
+
+search.addEventListener("input", render);
+render();
+</script>
 </body>
 </html>
