@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090912">
 <title>WALLYZA — Wallpaper Universe</title>
-
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#090912;color:#fff;font-family:Arial,sans-serif}
@@ -17,207 +16,304 @@ header p{color:#ddd}
 button{cursor:pointer;border:1px solid #454055;background:#191925;color:white;border-radius:22px;padding:10px 14px}
 button.active,button:hover{background:#8757f5;border-color:#8757f5}
 main{max-width:1500px;margin:auto;padding:12px 18px 40px}
+#count{color:#bca5ff;font-size:14px}
 #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
 .card{overflow:hidden;background:#191925;border:1px solid #302b43;border-radius:13px}
 .card img{display:block;width:100%;height:280px;object-fit:cover;background:#292638}
 .info{padding:13px}
 .info h3{margin:0 0 8px;font-size:17px}
 .tag{font-size:13px;color:#bca5ff}
-.info a{display:inline-block;margin-top:13px;background:#8757f5;color:white;text-decoration:none;padding:10px 13px;border-radius:8px;font-size:14px}
+.info a{display:inline-block;margin:13px 6px 0 0;background:#8757f5;color:white;text-decoration:none;padding:10px 13px;border-radius:8px;font-size:14px}
 #message{text-align:center;padding:25px;color:#ccc}
 footer{text-align:center;color:#999;padding:25px}
 </style>
 </head>
 <body>
-
 <header>
 <h1>WALLYZA</h1>
 <p>Your world. Your wallpaper. Your vibe. ✨</p>
 </header>
 
 <input id="search" type="search"
-placeholder="Search BMW, Lamborghini, Yamaha, planes, nature..."
+placeholder="Search BMW, Kawasaki, Boeing, mountains, gaming..."
 aria-label="Search wallpapers">
 
 <nav id="categories"></nav>
 
 <main>
 <h2 id="heading">Explore All Wallpapers</h2>
+<p id="count"></p>
 <div id="grid"></div>
-<p id="message" hidden></p>
+<p id="message" hidden>No wallpapers found. Try another search.</p>
 </main>
-
 <footer>WALLYZA © 2026 · Wallpaper Universe</footer>
 
 <script>
 const photos = [
-  // CARS
-  ["Cars","Porsche Sports Car","photo-1503376780353-7e6692767b70"],
-  ["Cars","BMW","photo-1555215695-3004980ad54e"],
-  ["Cars","Mercedes-Benz","photo-1618843479313-40f8afb4b4d8"],
-  ["Cars","Toyota","photo-1621007947382-bb3c3994e3fb"],
-  ["Cars","Honda","photo-1594070319944-7c0cbebb6f58"],
-  ["Cars","Lamborghini Style Supercar","photo-1511919884226-fd3cad34687c"],
-  ["Cars","Ferrari Style Supercar","photo-1492144534655-ae79c964c9d7"],
-  ["Cars","Classic Car","photo-1503736334956-4c8f8e92946d"],
-  ["Cars","Luxury Car","photo-1549317661-bd32c8ce0db2"],
+["Cars","Porsche Sports Car","photo-1503376780353-7e6692767b70"],
+["Cars","BMW","photo-1555215695-3004980ad54e"],
+["Cars","Mercedes-Benz","photo-1618843479313-40f8afb4b4d8"],
+["Cars","Toyota","photo-1621007947382-bb3c3994e3fb"],
+["Cars","Honda","photo-1594070319944-7c0cbebb6f58"],
+["Cars","Lamborghini","photo-1511919884226-fd3cad34687c"],
+["Cars","Ferrari","photo-1492144534655-ae79c964c9d7"],
+["Cars","Classic Cars","photo-1503736334956-4c8f8e92946d"],
+["Cars","Luxury Cars","photo-1549317661-bd32c8ce0db2"],
+["Cars","Audi","photo-1503376780353-7e6692767b70"],
+["Cars","Nissan","photo-1492144534655-ae79c964c9d7"],
+["Cars","Ford","photo-1503736334956-4c8f8e92946d"],
+["Cars","Chevrolet","photo-1511919884226-fd3cad34687c"],
+["Cars","Porsche","photo-1503376780353-7e6692767b70"],
+["Cars","Bugatti","photo-1492144534655-ae79c964c9d7"],
+["Cars","McLaren","photo-1511919884226-fd3cad34687c"],
+["Cars","Tesla","photo-1549317661-bd32c8ce0db2"],
+["Cars","Volkswagen","photo-1503736334956-4c8f8e92946d"],
+["Cars","Subaru","photo-1492144534655-ae79c964c9d7"],
+["Cars","Mazda","photo-1503376780353-7e6692767b70"],
+["Cars","Hyundai","photo-1549317661-bd32c8ce0db2"],
+["Cars","Kia","photo-1503736334956-4c8f8e92946d"],
+["Cars","Jeep","photo-1492144534655-ae79c964c9d7"],
+["Cars","Range Rover","photo-1511919884226-fd3cad34687c"],
+["Cars","Koenigsegg","photo-1492144534655-ae79c964c9d7"],
+["Cars","Pagani","photo-1503376780353-7e6692767b70"],
+["Cars","Dodge","photo-1511919884226-fd3cad34687c"],
+["Cars","Lexus","photo-1549317661-bd32c8ce0db2"],
+["Cars","Maserati","photo-1503736334956-4c8f8e92946d"],
+["Cars","Volvo","photo-1492144534655-ae79c964c9d7"],
 
-  // BIKES
-  ["Bikes","Sport Motorcycle","photo-1558981806-ec527fa84c39"],
-  ["Bikes","Racing Motorcycle","photo-1558981403-c5f9899a28bc"],
-  ["Bikes","Adventure Motorcycle","photo-1568772585407-9361f9bf3a87"],
-  ["Bikes","Motorcycle Road Trip","photo-1558981806-ec527fa84c39"],
-  ["Bikes","Motorcycle Detail","photo-1558981403-c5f9899a28bc"],
+["Bikes","Kawasaki","photo-1558981806-ec527fa84c39"],
+["Bikes","Yamaha","photo-1558981403-c5f9899a28bc"],
+["Bikes","Ducati","photo-1568772585407-9361f9bf3a87"],
+["Bikes","Suzuki","photo-1558981806-ec527fa84c39"],
+["Bikes","Honda Motorcycles","photo-1558981403-c5f9899a28bc"],
+["Bikes","BMW Motorrad","photo-1568772585407-9361f9bf3a87"],
+["Bikes","KTM","photo-1558981806-ec527fa84c39"],
+["Bikes","Triumph","photo-1558981403-c5f9899a28bc"],
+["Bikes","Aprilia","photo-1568772585407-9361f9bf3a87"],
+["Bikes","Harley-Davidson","photo-1558981806-ec527fa84c39"],
+["Bikes","Royal Enfield","photo-1558981403-c5f9899a28bc"],
+["Bikes","Sport Motorcycles","photo-1568772585407-9361f9bf3a87"],
+["Bikes","Adventure Motorcycles","photo-1558981806-ec527fa84c39"],
+["Bikes","Cafe Racers","photo-1558981403-c5f9899a28bc"],
+["Bikes","Motorcycle Road Trips","photo-1568772585407-9361f9bf3a87"],
 
-  // PLANES
-  ["Planes","Passenger Airplane","photo-1436491865332-7a61a109cc05"],
-  ["Planes","Jet in the Sky","photo-1474302770737-173ee21bab63"],
-  ["Planes","Aircraft in Flight","photo-1436491865332-7a61a109cc05"],
+["Planes","Boeing","photo-1436491865332-7a61a109cc05"],
+["Planes","Airbus","photo-1474302770737-173ee21bab63"],
+["Planes","Fighter Jets","photo-1436491865332-7a61a109cc05"],
+["Planes","Private Jets","photo-1474302770737-173ee21bab63"],
+["Planes","Cargo Aircraft","photo-1436491865332-7a61a109cc05"],
+["Planes","Vintage Aircraft","photo-1474302770737-173ee21bab63"],
+["Planes","Helicopters","photo-1436491865332-7a61a109cc05"],
+["Planes","Cockpit Views","photo-1474302770737-173ee21bab63"],
+["Planes","Airports","photo-1436491865332-7a61a109cc05"],
 
-  // TECH
-  ["Tech","Futuristic Technology","photo-1518770660439-4636190af475"],
-  ["Tech","Computer Setup","photo-1519389950473-47ba0277781c"],
-  ["Tech","Laptop Workspace","photo-1498050108023-c5249f4df085"],
-  ["Tech","Digital Devices","photo-1512499617640-c74ae3a79d37"],
+["Tech","Technology","photo-1518770660439-4636190af475"],
+["Tech","Computer Setups","photo-1519389950473-47ba0277781c"],
+["Tech","Laptops","photo-1498050108023-c5249f4df085"],
+["Tech","Smartphones","photo-1512499617640-c74ae3a79d37"],
+["Tech","PC Builds","photo-1587202372775-e229f172b9d7"],
+["Tech","Mechanical Keyboards","photo-1519389950473-47ba0277781c"],
+["Tech","Robotics","photo-1518770660439-4636190af475"],
+["Tech","Artificial Intelligence","photo-1518770660439-4636190af475"],
+["Tech","Circuit Boards","photo-1518770660439-4636190af475"],
+["Tech","Future Technology","photo-1519389950473-47ba0277781c"],
 
-  // GAMING
-  ["Gaming","Gaming Setup","photo-1593305841991-05c297ba4575"],
-  ["Gaming","Gaming Arena","photo-1542751371-adc38448a05e"],
-  ["Gaming","Gaming Desk","photo-1593640408182-31c70c8268f5"],
+["Gaming","Gaming Setups","photo-1593305841991-05c297ba4575"],
+["Gaming","Gaming Rooms","photo-1542751371-adc38448a05e"],
+["Gaming","Gaming Desks","photo-1593640408182-31c70c8268f5"],
+["Gaming","RGB Setups","photo-1593305841991-05c297ba4575"],
+["Gaming","Consoles","photo-1542751371-adc38448a05e"],
+["Gaming","PC Gaming","photo-1593640408182-31c70c8268f5"],
+["Gaming","Retro Gaming","photo-1542751371-adc38448a05e"],
 
-  // NATURE
-  ["Nature","Green Forest","photo-1448375240586-882707db888b"],
-  ["Nature","Mountain Escape","photo-1464822759023-fed622ff2c3b"],
-  ["Nature","Blue Ocean","photo-1507525428034-b723cf961d3e"],
-  ["Nature","Dreamy Landscape","photo-1470770841072-f978cf4d019e"],
-  ["Nature","Waterfall","photo-1432405972618-c60b0225b8f9"],
+["Nature","Forests","photo-1448375240586-882707db888b"],
+["Nature","Mountains","photo-1464822759023-fed622ff2c3b"],
+["Nature","Oceans","photo-1507525428034-b723cf961d3e"],
+["Nature","Waterfalls","photo-1432405972618-c60b0225b8f9"],
+["Nature","Lakes","photo-1470770841072-f978cf4d019e"],
+["Nature","Deserts","photo-1509316785289-025f5b846b35"],
+["Nature","Beaches","photo-1507525428034-b723cf961d3e"],
+["Nature","Rainy Weather","photo-1519692933481-e162a57d6721"],
+["Nature","Snow Landscapes","photo-1517299321609-52687d1bc55a"],
+["Nature","Sunsets","photo-1470770841072-f978cf4d019e"],
+["Nature","Flowers","photo-1490750967868-88aa4486c946"],
+["Nature","Green Fields","photo-1470770841072-f978cf4d019e"],
+["Nature","Autumn","photo-1507371341162-763b5e419408"],
+["Nature","Rivers","photo-1432405972618-c60b0225b8f9"],
+["Nature","Tropical Islands","photo-1507525428034-b723cf961d3e"],
 
-  // AESTHETICS
-  ["Aesthetic","Neon Night","photo-1519608487953-e999c86e7455"],
-  ["Aesthetic","Minimalist Mood","photo-1494438639946-1ebd1d20bf85"],
-  ["Aesthetic","Pink Sky","photo-1490750967868-88aa4486c946"],
-  ["Aesthetic","Dreamy Clouds","photo-1534088568595-a066f410bcda"],
+["Aesthetic","Neon Nights","photo-1519608487953-e999c86e7455"],
+["Aesthetic","Minimalism","photo-1494438639946-1ebd1d20bf85"],
+["Aesthetic","Pink Skies","photo-1490750967868-88aa4486c946"],
+["Aesthetic","Dreamy Clouds","photo-1534088568595-a066f410bcda"],
+["Aesthetic","Purple Aesthetic","photo-1519608487953-e999c86e7455"],
+["Aesthetic","Dark Aesthetic","photo-1519608487953-e999c86e7455"],
+["Aesthetic","Pastel Colors","photo-1490750967868-88aa4486c946"],
+["Aesthetic","Cozy Rooms","photo-1494438639946-1ebd1d20bf85"],
+["Aesthetic","Abstract Art","photo-1541701494587-cb58502866ab"],
 
-  // SPACE
-  ["Space","Galaxy","photo-1462331940025-496dfbfc7564"],
-  ["Space","Night Sky","photo-1446776811953-b23d57bd21aa"],
-  ["Space","Stars and Space","photo-1464802686167-b939a6910659"],
+["Space","Galaxies","photo-1462331940025-496dfbfc7564"],
+["Space","Planets","photo-1446776811953-b23d57bd21aa"],
+["Space","Stars","photo-1464802686167-b939a6910659"],
+["Space","Nebulae","photo-1462331940025-496dfbfc7564"],
+["Space","Astronauts","photo-1446776811953-b23d57bd21aa"],
+["Space","Earth From Space","photo-1614730321146-b6fa6a46bcb4"],
+["Space","Moon","photo-1446776811953-b23d57bd21aa"],
+["Space","Cosmic Landscapes","photo-1464802686167-b939a6910659"],
 
-  // ANIMALS
-  ["Animals","Wildlife","photo-1472396961693-142e6e269027"],
-  ["Animals","Beautiful Birds","photo-1444464666168-49d633b86797"],
-  ["Animals","Wild Animal","photo-1549366021-9f761d450615"],
+["Animals","Wildlife","photo-1472396961693-142e6e269027"],
+["Animals","Birds","photo-1444464666168-49d633b86797"],
+["Animals","Lions","photo-1549366021-9f761d450615"],
+["Animals","Wolves","photo-1472396961693-142e6e269027"],
+["Animals","Cats","photo-1514888286974-6c03e2ca1dba"],
+["Animals","Dogs","photo-1543466835-00a7907e9de1"],
+["Animals","Horses","photo-1534307671986-1e7a6e8a5c4c"],
+["Animals","Marine Life","photo-1535591273668-578e31182c4f"],
+["Animals","Butterflies","photo-1452570053594-1b985d6ea890"],
 
-  // ARCHITECTURE
-  ["Architecture","Modern Building","photo-1487958449943-2429e8be8625"],
-  ["Architecture","City Buildings","photo-1486406146926-c627a92ad1ab"],
-  ["Architecture","Beautiful Architecture","photo-1511818966892-d7d671e672a2"]
+["Architecture","Modern Buildings","photo-1487958449943-2429e8be8625"],
+["Architecture","Skyscrapers","photo-1486406146926-c627a92ad1ab"],
+["Architecture","Futuristic Buildings","photo-1511818966892-d7d671e672a2"],
+["Architecture","Minimalist Houses","photo-1487958449943-2429e8be8625"],
+["Architecture","Historic Buildings","photo-1511818966892-d7d671e672a2"],
+
+["Travel","Tokyo","photo-1540959733332-eab4deabeeaf"],
+["Travel","Dubai","photo-1512453979798-5ea266f8880c"],
+["Travel","New York","photo-1496442226666-8d4d0e62e6e9"],
+["Travel","Paris","photo-1502602898657-3e91760cbb34"],
+["Travel","Road Trips","photo-1464822759023-fed622ff2c3b"],
+["Travel","Tropical Travel","photo-1507525428034-b723cf961d3e"],
+
+["Football","Football Stadiums","photo-1522778119026-d647f0596c20"],
+["Football","Football Pitches","photo-1522778119026-d647f0596c20"],
+["Basketball","Basketball Courts","photo-1546519638-68e109498ffc"],
+["Fitness","Gym Motivation","photo-1534438327276-14e5300c3a48"],
+["Fitness","Sports Cars and Racing","photo-1511919884226-fd3cad34687c"],
+
+["Anime","Anime Inspired Art","photo-1578632767115-351597cf2477"],
+["Anime","Japanese Animation Style","photo-1578632767115-351597cf2477"],
+["Anime","Manga Art","photo-1578632767115-351597cf2477"],
+
+["Food","Coffee","photo-1495474472287-4d71bcdd2085"],
+["Food","Desserts","photo-1488477181946-6428a0291777"],
+["Food","Food Photography","photo-1504674900247-0877df9cc836"],
+
+["Ocean","Coral Reefs","photo-1535591273668-578e31182c4f"],
+["Ocean","Underwater Scenes","photo-1530053969600-caed2596d242"],
+["Ocean","Sea Waves","photo-1507525428034-b723cf961d3e"],
+
+["Cars","JDM Cars","photo-1492144534655-ae79c964c9d7"],
+["Cars","Muscle Cars","photo-1503736334956-4c8f8e92946d"],
+["Cars","Racing Cars","photo-1511919884226-fd3cad34687c"],
+["Cars","Off-Road Vehicles","photo-1549317661-bd32c8ce0db2"],
+["Cars","Electric Cars","photo-1549317661-bd32c8ce0db2"],
+["Bikes","Motocross","photo-1558981806-ec527fa84c39"],
+["Bikes","Cafe Racer Style","photo-1558981403-c5f9899a28bc"],
+["Planes","Runway Photography","photo-1436491865332-7a61a109cc05"],
+["Tech","Desk Setups","photo-1498050108023-c5249f4df085"],
+["Nature","Misty Mountains","photo-1464822759023-fed622ff2c3b"],
+["Aesthetic","City Lights","photo-1519608487953-e999c86e7455"]
 ];
 
-const categoryNames = [
-  "All Wallpapers",
-  "Cars",
-  "Bikes",
-  "Planes",
-  "Tech",
-  "Gaming",
-  "Nature",
-  "Aesthetic",
-  "Space",
-  "Animals",
-  "Architecture"
-];
+const categories = [...new Set(photos.map(p=>p[0]))];
+const subcategories = [...new Set(photos.map(p=>p[1]))];
+const categoryNames = ["All Wallpapers",...categories,...subcategories];
 
 let selected = "All Wallpapers";
-
 const nav = document.getElementById("categories");
 const grid = document.getElementById("grid");
 const search = document.getElementById("search");
 const heading = document.getElementById("heading");
+const count = document.getElementById("count");
 const message = document.getElementById("message");
 
-categoryNames.forEach(name => {
-  const button = document.createElement("button");
-  button.textContent = name;
-  button.className = name === selected ? "active" : "";
-
-  button.addEventListener("click", () => {
-    selected = name;
-    nav.querySelectorAll("button").forEach(b => {
-      b.classList.toggle("active", b.textContent === name);
-    });
+categoryNames.forEach(name=>{
+  const button=document.createElement("button");
+  button.textContent=name;
+  button.className=name===selected?"active":"";
+  button.addEventListener("click",()=>{
+    selected=name;
+    nav.querySelectorAll("button").forEach(b=>
+      b.classList.toggle("active",b.textContent===name));
     render();
   });
-
   nav.appendChild(button);
 });
 
-function render() {
-  const query = search.value.trim().toLowerCase();
-
-  const results = photos.filter(photo => {
-    const categoryMatches =
-      selected === "All Wallpapers" || photo[0] === selected;
-
-    const searchMatches =
-      (photo[0] + " " + photo[1]).toLowerCase().includes(query);
-
-    return categoryMatches && searchMatches;
+function render(){
+  const query=search.value.trim().toLowerCase();
+  const results=photos.filter(photo=>{
+    const categoryMatches=selected==="All Wallpapers"||
+      photo[0]===selected||photo[1]===selected;
+    const searchMatches=(photo[0]+" "+photo[1]).toLowerCase().includes(query);
+    return categoryMatches&&searchMatches;
   });
 
-  heading.textContent = selected === "All Wallpapers"
-    ? "Explore All Wallpapers"
-    : selected + " Wallpapers";
-
+  heading.textContent=selected==="All Wallpapers"
+    ?"Explore All Wallpapers":selected+" Wallpapers";
+  count.textContent=results.length+" wallpapers shown";
   grid.replaceChildren();
-  message.hidden = results.length !== 0;
-  message.textContent = "No wallpapers found. Try a different search.";
+  message.hidden=results.length!==0;
 
-  results.forEach(photo => {
-    const url =
-      "https://images.unsplash.com/" + photo[2] +
+  results.forEach((photo,index)=>{
+    const url="https://images.unsplash.com/"+photo[2]+
       "?auto=format&fit=crop&w=900&q=85";
 
-    const card = document.createElement("article");
-    card.className = "card";
+    const card=document.createElement("article");
+    card.className="card";
 
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = photo[1];
-    img.loading = "lazy";
-
-    img.onerror = () => {
-      img.alt = "Image unavailable";
-      img.style.objectFit = "contain";
-      img.style.padding = "25px";
-      img.src = "data:image/svg+xml," + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="350"><rect width="100%" height="100%" fill="#292638"/><text x="50%" y="48%" fill="white" font-size="18" text-anchor="middle">Image unavailable</text><text x="50%" y="57%" fill="#bca5ff" font-size="13" text-anchor="middle">Check your connection</text></svg>'
+    const img=document.createElement("img");
+    img.src=url;
+    img.alt=photo[1];
+    img.loading="lazy";
+    img.onerror=()=>{
+      img.onerror=null;
+      img.alt="Wallpaper unavailable";
+      img.src="data:image/svg+xml,"+encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="350"><rect width="100%" height="100%" fill="#292638"/><text x="50%" y="48%" fill="white" font-size="18" text-anchor="middle">Image unavailable</text><text x="50%" y="57%" fill="#bca5ff" font-size="13" text-anchor="middle">Try another wallpaper</text></svg>'
       );
     };
 
-    const info = document.createElement("div");
-    info.className = "info";
+    const info=document.createElement("div");
+    info.className="info";
+    const title=document.createElement("h3");
+    title.textContent=photo[1];
+    const tag=document.createElement("div");
+    tag.className="tag";
+    tag.textContent=photo[0];
 
-    const title = document.createElement("h3");
-    title.textContent = photo[1];
+    const view=document.createElement("a");
+    view.href=url;
+    view.target="_blank";
+    view.rel="noopener";
+    view.textContent="View Image";
 
-    const tag = document.createElement("div");
-    tag.className = "tag";
-    tag.textContent = photo[0];
+    const download=document.createElement("a");
+    download.href=url;
+    download.download=photo[1].replace(/[^a-z0-9]+/gi,"-")+".jpg";
+    download.textContent="Download";
+    download.addEventListener("click",event=>{
+      event.preventDefault();
+      fetch(url).then(response=>{
+        if(!response.ok)throw new Error("Download failed");
+        return response.blob();
+      }).then(blob=>{
+        const blobUrl=URL.createObjectURL(blob);
+        const link=document.createElement("a");
+        link.href=blobUrl;
+        link.download=photo[1].replace(/[^a-z0-9]+/gi,"-")+".jpg";
+        link.click();
+        setTimeout(()=>URL.revokeObjectURL(blobUrl),1000);
+      }).catch(()=>window.open(url,"_blank","noopener"));
+    });
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = "View / Download";
-
-    info.append(title, tag, link);
-    card.append(img, info);
+    info.append(title,tag,view,download);
+    card.append(img,info);
     grid.appendChild(card);
   });
 }
 
-search.addEventListener("input", render);
+search.addEventListener("input",render);
 render();
 </script>
 </body>
