@@ -1,239 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#080b14">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WALLYZA</title>
-<style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: #090b12;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-header {
-  padding: 22px 18px;
-  background: #111521;
-  border-bottom: 1px solid #252a3b;
-}
-h1 { margin: 0; color: #8c7bff; }
-header p { color: #a9aec2; }
-main { padding: 18px; max-width: 1100px; margin: auto; }
-input {
-  width: 100%; padding: 14px;
-  border: 1px solid #343950;
-  border-radius: 12px;
-  background: #171b29; color: white;
-}
-.categories {
-  display: flex; gap: 9px; flex-wrap: wrap;
-  margin: 18px 0;
-}
-button {
-  background: #1b2030; color: white;
-  border: 1px solid #363c54;
-  border-radius: 20px; padding: 10px 14px;
-  cursor: pointer;
-}
-button.active { background: #7565f5; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 13px;
-}
-.wall {
-  overflow: hidden; background: #151927;
-  border-radius: 14px; border: 1px solid #282e40;
-}
-.wall img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
-.wall div { padding: 10px; }
-.wall p { margin: 0 0 10px; font-weight: bold; }
-.wall a {
-  display: inline-block; background: #7565f5;
-  padding: 9px 12px; border-radius: 9px;
-  color: white; text-decoration: none; font-size: 13px;
-}
-@media(min-width:650px) {
-  .grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>WALLYZA — Wallpaper Universe</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #09090f;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 35px 15px 25px;
+      background: linear-gradient(135deg, #17132d, #10101a);
+    }
+
+    header h1 {
+      font-size: clamp(38px, 7vw, 65px);
+      margin: 0;
+      letter-spacing: 4px;
+      color: #a78bfa;
+    }
+
+    header p {
+      color: #c7c7d5;
+    }
+
+    .search-box {
+      display: block;
+      width: min(90%, 550px);
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #39394c;
+      background: #171722;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: #a78bfa;
+    }
+
+    #categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 15px 25px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: 1px solid #39394c;
+      border-radius: 20px;
+      background: #171722;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover,
+    button.active {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+    }
+
+    main {
+      padding: 10px 20px 40px;
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    #heading {
+      margin-bottom: 20px;
+    }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(210px, 1fr)
+      );
+      gap: 20px;
+    }
+
+    .wall {
+      background: #171722;
+      border: 1px solid #29293b;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .wall:hover {
+      transform: translateY(-4px);
+    }
+
+    .wall img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      background: #252536;
+    }
+
+    .wall-info {
+      padding: 14px;
+    }
+
+    .wall-info h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .wall-info small {
+      color: #aaaac0;
+    }
+
+    .wall-info a {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 13px;
+      border-radius: 8px;
+      background: #8b5cf6;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .wall-info a:hover {
+      background: #7041dc;
+    }
+
+    #message {
+      color: #c7c7d5;
+      text-align: center;
+      padding: 30px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #85859a;
+    }
+  </style>
 </head>
+
 <body>
-<header>
-  <h1>✦ WALLYZA</h1>
-  <p>Your screen. Your style. Your universe.</p>
-</header>
-<main>
-  <input id="search" placeholder="Search cars, tech, planes..."
-  oninput="render()">
-  <div class="categories" id="categories"></div>
-  <h2 id="heading">Explore wallpapers</h2>
-  <div class="grid" id="grid"></div>
-</main>
-<script>
-const photos = [
-  ["Tech","Futuristic Tech","photo-1518770660439-4636190af475"],
-  ["Tech","Gaming Setup","photo-1593305841991-05c297ba4575"],
-  ["Cars","Supercar","photo-1503376780353-7e6692767b70"],
-  ["Cars","Sports Car","photo-1492144534655-ae79c964c9d7"],
-  ["Planes","Aircraft","photo-1436491865332-7a61a109cc05"],
-  ["Planes","Jet in the Sky","photo-1474302770737-173ee21bab63"],
-  ["Bikes","Motorcycle","photo-1558981806-ec527fa84c39"],
-  ["Bikes","Racing Bike","photo-1558981403-c5f9899a28bc"],
-  ["Aesthetic","Dreamy Landscape","photo-1470770841072-f978cf4d019e"],
-  ["Aesthetic","Mountain Escape","photo-1464822759023-fed622ff2c3b"],
-  ["Tech","Neon City","photo-1519608487953-e999c86e7455"],
-  ["Cars","Classic Car","photo-1503736334956-4c8f8e92946d"]
-];
-let category = "All";
-const cats = ["All","Tech","Cars","Planes","Bikes","Aesthetic"];
-const categories = document.getElementById("categories");
-cats.forEach(c => {
-  const b = document.createElement("button");
-  b.textContent = c;
-  b.className = c === category ? "active" : "";
-  b.onclick = () => {
-    category = c;
-    [...categories.children].forEach(x =>
-      x.classList.toggle("active", x.textContent === c));
+  <header>
+    <h1>WALLYZA</h1>
+    <p>Your world. Your wallpaper. Your vibe. ✨</p>
+  </header>
+
+  <input
+    id="search"
+    class="search-box"
+    type="search"
+    placeholder="🔍 Search cars, bikes, gaming, nature..."
+    aria-label="Search wallpapers"
+  >
+
+  <nav id="categories" aria-label="Wallpaper categories"></nav>
+
+  <main>
+    <h2 id="heading">Explore Wallpapers</h2>
+    <section id="grid"></section>
+    <p id="message" hidden>No wallpapers found. Try another search!</p>
+  </main>
+
+  <footer>
+    WALLYZA © 2026 · Find your next wallpaper.
+  </footer>
+
+  <script>
+    const photos = [
+      {
+        category: "Tech",
+        name: "Futuristic Technology",
+        id: "photo-1518770660439-4636190af475"
+      },
+      {
+        category: "Gaming",
+        name: "Gaming Setup",
+        id: "photo-1593305841991-05c297ba4575"
+      },
+      {
+        category: "Cars",
+        name: "Luxury Sports Car",
+        id: "photo-1503376780353-7e6692767b70"
+      },
+      {
+        category: "Cars",
+        name: "Sports Car",
+        id: "photo-1492144534655-ae79c964c9d7"
+      },
+      {
+        category: "Cars",
+        name: "Classic Car",
+        id: "photo-1503736334956-4c8f8e92946d"
+      },
+      {
+        category: "Planes",
+        name: "Aircraft",
+        id: "photo-1436491865332-7a61a109cc05"
+      },
+      {
+        category: "Planes",
+        name: "Jet in the Sky",
+        id: "photo-1474302770737-173ee21bab63"
+      },
+      {
+        category: "Bikes",
+        name: "Motorcycle",
+        id: "photo-1558981806-ec527fa84c39"
+      },
+      {
+        category: "Bikes",
+        name: "Racing Bike",
+        id: "photo-1558981403-c5f9899a28bc"
+      },
+      {
+        category: "Nature",
+        name: "Dreamy Landscape",
+        id: "photo-1470770841072-f978cf4d019e"
+      },
+      {
+        category: "Nature",
+        name: "Mountain Escape",
+        id: "photo-1464822759023-fed622ff2c3b"
+      },
+      {
+        category: "Space",
+        name: "Galaxy",
+        id: "photo-1462331940025-496dfbfc7564"
+      },
+      {
+        category: "Aesthetic",
+        name: "Neon Night",
+        id: "photo-1519608487953-e999c86e7455"
+      },
+      {
+        category: "Animals",
+        name: "Wildlife",
+        id: "photo-1472396961693-142e6e269027"
+      },
+      {
+        category: "Architecture",
+        name: "Modern Architecture",
+        id: "photo-1487958449943-2429e8be8625"
+      },
+      {
+        category: "Nature",
+        name: "Ocean Views",
+        id: "photo-1507525428034-b723cf961d3e"
+      },
+      {
+        category: "Tech",
+        name: "Computer Technology",
+        id: "photo-1519389950473-47ba0277781c"
+      },
+      {
+        category: "Aesthetic",
+        name: "Minimalist Mood",
+        id: "photo-1494438639946-1ebd1d20bf85"
+      },
+      {
+        category: "Gaming",
+        name: "Gaming Gear",
+        id: "photo-1542751371-adc38448a05e"
+      },
+      {
+        category: "Nature",
+        name: "Forest Adventure",
+        id: "photo-1448375240586-882707db888b"
+      }
+    ];
+
+    let selectedCategory = "All";
+
+    const categories = [
+      "All",
+      "Cars",
+      "Bikes",
+      "Tech",
+      "Gaming",
+      "Nature",
+      "Space",
+      "Planes",
+      "Animals",
+      "Aesthetic",
+      "Architecture"
+    ];
+
+    const categoryBox = document.getElementById("categories");
+    const search = document.getElementById("search");
+    const grid = document.getElementById("grid");
+    const heading = document.getElementById("heading");
+    const message = document.getElementById("message");
+
+    categories.forEach(function(category) {
+      const button = document.createElement("button");
+      button.textContent = category;
+      button.className =
+        category === selectedCategory ? "active" : "";
+
+      button.addEventListener("click", function() {
+        selectedCategory = category;
+
+        document.querySelectorAll("#categories button")
+          .forEach(function(item) {
+            item.classList.toggle(
+              "active",
+              item.textContent === category
+            );
+          });
+
+        render();
+      });
+
+      categoryBox.appendChild(button);
+    });
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+
+      const results = photos.filter(function(photo) {
+        const matchesCategory =
+          selectedCategory === "All" ||
+          photo.category === selectedCategory;
+
+        const matchesSearch =
+          (photo.name + " " + photo.category)
+            .toLowerCase()
+            .includes(query);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      heading.textContent =
+        selectedCategory === "All"
+          ? "Explore Wallpapers"
+          : selectedCategory + " Wallpapers";
+
+      grid.innerHTML = "";
+      message.hidden = results.length !== 0;
+
+      results.forEach(function(photo) {
+        const url =
+          "https://images.unsplash.com/" + photo.id +
+          "?auto=format&fit=crop&w=900&q=85";
+
+        const card = document.createElement("article");
+        card.className = "wall";
+
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = photo.name;
+        img.loading = "lazy";
+
+        const info = document.createElement("div");
+        info.className = "wall-info";
+
+        const name = document.createElement("h3");
+        name.textContent = photo.name;
+
+        const category = document.createElement("small");
+        category.textContent = photo.category;
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "View / Download";
+
+        info.append(name, category, document.createElement("br"), link);
+        card.append(img, info);
+        grid.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", render);
+
     render();
-  };
-  categories.appendChild(b);
-});
-<div class="wallpaper-grid" id="gallery"></div>
-
-<style>
-.wallpaper-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 18px;
-}
-
-.wallpaper-card {
-  overflow: hidden;
-  border-radius: 14px;
-  background: #171923;
-  color: white;
-  padding-bottom: 12px;
-}
-
-.wallpaper-card img {
-  display: block;
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-}
-
-.wallpaper-card h3 {
-  margin: 12px;
-  font-size: 16px;
-}
-
-.wallpaper-card a {
-  display: inline-block;
-  margin: 0 12px;
-  color: #9eafff;
-}
-</style>
-
-<script>
-const wallpapers = [
-  {
-    name: "BMW M4",
-    category: "Cars",
-    image: "PASTE_THE_BMW_IMAGE_URL_HERE"
-  },
-  {
-    name: "Kawasaki Ninja",
-    category: "Bikes",
-    image: "PASTE_THE_KAWASAKI_IMAGE_URL_HERE"
-  },
-  {
-    name: "Mountain Landscape",
-    category: "Nature",
-    image: "PASTE_THE_MOUNTAIN_IMAGE_URL_HERE"
-  },
-  {
-    name: "Gaming Setup",
-    category: "Tech",
-    image: "PASTE_THE_GAMING_IMAGE_URL_HERE"
-  },
-  {
-    name: "Pastel Aesthetic",
-    category: "Aesthetic",
-    image: "PASTE_THE_AESTHETIC_IMAGE_URL_HERE"
-  },
-  {
-    name: "Passenger Airplane",
-    category: "Planes",
-    image: "PASTE_THE_PLANE_IMAGE_URL_HERE"
-  }
-];
-
-function render() {
-  const grid = document.getElementById("grid");
-  const search = document.getElementById("search").value
-    .trim()
-    .toLowerCase();
-
-  const filtered = photos.filter(p => {
-    const matchesCategory =
-      category === "All" || p[0] === category;
-
-    const matchesSearch =
-      p.join(" ").toLowerCase().includes(search);
-
-    return matchesCategory && matchesSearch;
-  });
-
-  document.getElementById("heading").textContent =
-    category === "All"
-      ? "Explore wallpapers"
-      : category + " wallpapers";
-
-  if (filtered.length === 0) {
-    grid.innerHTML = "<p>No wallpapers found. Try another search.</p>";
-    return;
-  }
-
-  grid.innerHTML = filtered.map(p => {
-    const imageUrl =
-      "https://images.unsplash.com/" + p[2] +
-      "?auto=format&fit=crop&w=900&q=85";
-
-    return `
-      <article class="wall">
-        <img
-          src="${imageUrl}"
-          alt="${p[1]}"
-          loading="lazy"
-        >
-        <div>
-          <p>${p[1]}</p>
-          <small>${p[0]}</small><br><br>
-          <a href="${imageUrl}" target="_blank" rel="noopener">
-            View / Download
-          </a>
-        </div>
-      </article>
-    `;
-  }).join("");
-}
-
-render();
-</script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .catch(error => console.error("Service worker error:", error));
-  });
-}
-</script>
-
+  </script>
 </body>
 </html>
