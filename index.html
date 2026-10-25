@@ -63,7 +63,7 @@ button.active { background: #7565f5; }
 </head>
 <body>
 <header>
-  <h1>✦ WALLVERSE</h1>
+  <h1>✦ WALLYZA</h1>
   <p>Your screen. Your style. Your universe.</p>
 </header>
 <main>
@@ -126,7 +126,7 @@ function render() {
     title.textContent = p[1];
     const link = document.createElement("a");
     link.href = url;
-    link.download = "wallverse-wallpaper.jpg";
+    link.download = "WALLYZAwallpaper.jpg";
     link.target = "_blank";
     link.rel = "noopener";
     link.textContent = "View / Download ↗";
@@ -142,7 +142,7 @@ render();
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js")
-        .then(() => console.log("WALLVERSE app is ready!"))
+        .then(() => console.log("WALLYZA app is ready!"))
         .catch((error) => console.error("Service worker error:", error));
     });
   }
