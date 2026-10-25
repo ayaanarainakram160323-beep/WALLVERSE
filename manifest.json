@@ -1,4 +1,6 @@
-"description": "Discover cool wallpapers for your phone.",
+"name": "WALLYZA",
+  "short_name": "WALLYZA",
+  "description": "Discover cool wallpapers for your phone.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
