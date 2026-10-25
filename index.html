@@ -104,10 +104,10 @@ cats.forEach(c => {
   categories.appendChild(b);
 });
 function render() {
-  const q = document.getElementById("search").value.toLowerCase();
   const results = photos.filter(p =>
-    (category === "All" || p[0] === category) &&
-   p.join(" ").toLowerCase().includes(q));
+  (category === "All" || p[0] === category) &&
+  p.join(" ").toLowerCase().includes(q)
+);
   document.getElementById("heading").textContent =
     category === "All" ? "Explore wallpapers" : category + " Wallpapers";
   const grid = document.getElementById("grid");
