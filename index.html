@@ -173,34 +173,67 @@ const wallpapers = [
   }
 ];
 
-function renderWallpapers(items = wallpapers) {
-  const gallery = document.getElementById("gallery");
+function render() {
+  const grid = document.getElementById("grid");
+  const search = document.getElementById("search").value
+    .trim()
+    .toLowerCase();
 
-  gallery.innerHTML = items.map((wallpaper) => `
-    <article class="wallpaper-card">
-      <img
-        src="${wallpaper.image}"
-        alt="${wallpaper.name}"
-        loading="lazy"
-      >
-      <h3>${wallpaper.name}</h3>
-      <a href="${wallpaper.image}" download>
-        Download
-      </a>
-    </article>
-  `).join("");
+  const filtered = photos.filter(p => {
+    const matchesCategory =
+      category === "All" || p[0] === category;
+
+    const matchesSearch =
+      p.join(" ").toLowerCase().includes(search);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  document.getElementById("heading").textContent =
+    category === "All"
+      ? "Explore wallpapers"
+      : category + " wallpapers";
+
+  if (filtered.length === 0) {
+    grid.innerHTML = "<p>No wallpapers found. Try another search.</p>";
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const imageUrl =
+      "https://images.unsplash.com/" + p[2] +
+      "?auto=format&fit=crop&w=900&q=85";
+
+    return `
+      <article class="wall">
+        <img
+          src="${imageUrl}"
+          alt="${p[1]}"
+          loading="lazy"
+        >
+        <div>
+          <p>${p[1]}</p>
+          <small>${p[0]}</small><br><br>
+          <a href="${imageUrl}" target="_blank" rel="noopener">
+            View / Download
+          </a>
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
-renderWallpapers();
+render();
 </script>
-  <script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js")
-        .then(() => console.log("WALLYZA app is ready!"))
-        .catch((error) => console.error("Service worker error:", error));
-    });
-  }
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(error => console.error("Service worker error:", error));
+  });
+}
 </script>
+
 </body>
 </html>
